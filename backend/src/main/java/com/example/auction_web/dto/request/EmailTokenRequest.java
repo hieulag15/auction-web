@@ -1,22 +1,20 @@
 package com.example.auction_web.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class BillItemUpdateRequest {
-    BigDecimal profitPrice;
-    BigDecimal bidPrice;
-    Boolean delFlag;
-    LocalDateTime updatedAt;
+public class EmailTokenRequest {
+    @NotNull
+    @NotBlank
+    String token;
 }
