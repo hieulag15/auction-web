@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles'
 import { Box, TableCell, TableHead, TableRow, Checkbox } from '@mui/material'
 import TableContainer from '@mui/material/TableContainer'
 
-export const StyledBox = styled(Box)(({ theme }) => ({
+export const StyledContainer = styled(Box)(({ theme }) => ({
   bgcolor: theme.palette.primary.main,
   color: theme.palette.primary.textMain
 }))
@@ -78,7 +78,7 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '& td, & th': { borderColor: theme.palette.primary.border }
 }))
 
-export const StyledStatusBox = styled(Box)(({ theme}) => ({
+export const StyledStatusBox = styled(Box)(({ theme }) => ({
   padding: theme.spacing(0.5, 1),
   borderRadius: '9999px',
   fontSize: '0.75rem',
@@ -93,5 +93,5 @@ export const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
 }))
 
 export const StyledSpan = styled('span')(({ theme }) => ({
-  color: theme.palette.primary.textMain,
-}));
+  color: theme.palette.primary.textMain
+}))
