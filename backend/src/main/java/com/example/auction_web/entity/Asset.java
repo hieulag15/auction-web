@@ -37,7 +37,7 @@ public class Asset {
     @Column(precision = 15, scale = 0)
     BigDecimal assetPrice;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "insprectorId", referencedColumnName = "insprectorId")
     Insprector insprector;
 
@@ -49,6 +49,18 @@ public class Asset {
     Boolean delFlag;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        this.delFlag = false;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
     @OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     AuctionSession auctionSession;

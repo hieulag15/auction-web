@@ -2,12 +2,9 @@ package com.example.auction_web.controller;
 
 import com.example.auction_web.dto.request.TypeCreateRequest;
 import com.example.auction_web.dto.request.TypeUpdateRequest;
-import com.example.auction_web.dto.request.auth.CategoryFilterRequest;
+import com.example.auction_web.dto.request.filter.CategoryFilterRequest;
 import com.example.auction_web.dto.response.ApiResponse;
-import com.example.auction_web.dto.response.CategoryResponse;
 import com.example.auction_web.dto.response.TypeResponse;
-import com.example.auction_web.entity.Category;
-import com.example.auction_web.entity.Type;
 import com.example.auction_web.service.TypeService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -39,9 +36,11 @@ public class TypeController {
                 .build();
     }
 
-    @PostMapping("/filter")
-    public ApiResponse<List<TypeResponse>> filterCategories(@RequestBody CategoryFilterRequest filterRequest) {
-        List<TypeResponse> filteredTypes = typeService.filterTypes(filterRequest.getStatus(), filterRequest.getKeyword());
+    @GetMapping("/filter")
+    public ApiResponse<List<TypeResponse>> filterCategories(
+            @RequestParam(required = false) Boolean status,
+            @RequestParam(required = false) String keyword) {
+        List<TypeResponse> filteredTypes = typeService.filterTypes(status, keyword);
         return ApiResponse.<List<TypeResponse>>builder()
                 .code(HttpStatus.OK.value())
                 .result(filteredTypes)
