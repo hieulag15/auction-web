@@ -2,10 +2,29 @@ import { useAppStore } from '~/store/appStore'
 import handleApiError from './config/handldeApiError';
 import { POST } from './config/axiosMethods';
 
+export const AUTH_PATH = '/auth';
+
 export const getToken = async (payload) => {
   console.log('Registering:', payload);
   try {
-    const response = await POST({ url: '/auth/token', payload });
+    const response = await POST({ url: `${AUTH_PATH}/token`, payload });
+    if (response) {
+      console.log('response', response);
+    }
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+export const refreshToken = async (token) => {
+  try {
+    if (!token) {
+      throw new Error('No token found in store');
+    }
+
+    const response = await POST({ url: `${AUTH_PATH}/refresh`, payload: { token } });
+
     return response.data;
   } catch (error) {
     handleApiError(error);
@@ -15,11 +34,12 @@ export const getToken = async (payload) => {
 export const logout = async () => {
   try {
     const token = useAppStore.getState().token;
+
     if (!token) {
       throw new Error('No token found in store');
     }
 
-    const response = await POST({ url: '/auth/logout', payload: { token } });
+    const response = await POST({ url: `${AUTH_PATH}/logout`, payload: { token } });
 
     return response.data;
   } catch (error) {
@@ -45,3 +65,13 @@ export const confirmAccount = async (token) => {
     handleApiError(error);
   }
 };
+
+export const introspect = async (token) => {
+  try {
+    const response = await POST({ url: `${AUTH_PATH}/introspect`, payload: { token } });
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+

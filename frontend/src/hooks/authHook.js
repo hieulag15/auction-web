@@ -1,6 +1,6 @@
 // hooks/useAuth.js
 import { useMutation, useQueryClient } from 'react-query'
-import { getToken, logout, register, confirmAccount } from '~/api/authApi'
+import { getToken, logout, register, confirmAccount, refreshToken, introspect } from '~/api/authApi'
 import { useAppStore } from '~/store/appStore'
 
 // Hook để lấy token
@@ -9,7 +9,8 @@ export const useGetToken = () => {
 
   return useMutation(getToken, {
     onSuccess: (data) => {
-      setToken(data.token)
+      setToken(data.result.token)
+
       console.log('Token retrieved successfully:', data)
     },
     onError: (error) => {
@@ -18,6 +19,25 @@ export const useGetToken = () => {
   }
   )
 }
+
+// Hook để refresh token
+export const useRefreshToken = () => {
+  const setToken = useAppStore((state) => state.setToken);
+
+  return useMutation(refreshToken, {
+    onSuccess: (data) => {
+      if (data && data.token) {
+        setToken(data.token);
+        console.log('Token refreshed successfully:', data);
+      } else {
+        console.error('Invalid response structure:', data);
+      }
+    },
+    onError: (error) => {
+      console.error('Error refreshing token:', error);
+    }
+  });
+};
 
 // Hook để logout
 export const useLogout = () => {
@@ -62,3 +82,20 @@ export const useConfirmAccount = () => {
     }
   })
 }
+
+// Hook để introspect token
+// export const useIntrospect = () => {
+//   const token = useAppStore.getState().token
+//   return useMutation(introspect(token), {
+//     onSuccess: (data) => {
+//       if (data.valid === true) {
+//         return token
+//       } else {
+        
+//       }
+//     },
+//     onError: (error) => {
+//       console.error('Error introspecting token:', error)
+//     }
+//   })
+// }
