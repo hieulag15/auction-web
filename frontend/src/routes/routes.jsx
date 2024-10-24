@@ -1,7 +1,6 @@
 import AssetListPage from '~/pages/Asset/AssetListPage'
 import CategoryListPage from '~/pages/Category/CategoryListPage'
 import HomePage from '~/pages/Home/HomePage'
-import User from '~/pages/Customer/User'
 import ConfirmAccount from '~/pages/Authentication/comfirm'
 import AddAssetPage from '~/pages/Asset/AddAssetPage'
 import TypeListPage from '~/pages/Type/TypeListPage'
@@ -9,6 +8,9 @@ import RequirementListPage from '~/pages/Requirement/RequirementListPage'
 import AddRequirementPage from '~/pages/Requirement/AddRequirementPage'
 import Login from '~/pages/Authentication/Login'
 import Register from '~/pages/Authentication/Register'
+import CustomerHomePage from '~/pages/customer/Home'
+import ProductListPage from '~/pages/customer/ProductListPage'
+import ProductDetailPage from '~/pages/customer/ProductDetailPage';
 
 const BASE_PATHS = {
   HOME: '/',
@@ -16,13 +18,21 @@ const BASE_PATHS = {
   ASSET: '/asset',
   REQUIREMENT: '/requirement',
   CONFIRM_ACCOUNT: '/confirm-account',
-  USERS: '/users'
+  CUSTOMER: '/customer'
 }
 
 export const routes = [
   {
     path: `${BASE_PATHS.CATEGORY}`,
     page: CategoryListPage
+  },
+  {
+    path: `${BASE_PATHS.CUSTOMER}-asset`,
+    page: ProductListPage,
+  },
+  {
+    path: `/:productSlug`, 
+    page: ProductDetailPage,
   },
   {
     path: `${BASE_PATHS.CATEGORY}/type`,
@@ -53,15 +63,15 @@ export const routes = [
     page: ConfirmAccount
   },
   {
-    path: BASE_PATHS.USERS,
-    page: User
-  },
-  {
     path: '/login',
     page: Login
   },
   {
     path: '/register',
     page: Register
-  }
+  },
+  {
+    path: `${BASE_PATHS.CUSTOMER}`,
+    page: CustomerHomePage
+  },
 ]

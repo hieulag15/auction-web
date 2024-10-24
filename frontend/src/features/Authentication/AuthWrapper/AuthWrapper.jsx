@@ -20,13 +20,13 @@ export default function AuthWrapper({ children }) {
       <AuthBackground />
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', minHeight: '100vh' }}>
         <Box sx={{ ml: 3, mt: 3 }}>
-          <Logo />
+          {/* <Logo /> */}
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexGrow: 1, minHeight: { xs: 'calc(100vh - 210px)', sm: 'calc(100vh - 134px)', md: 'calc(100vh - 112px)' } }}>
           <AuthCard>{children}</AuthCard>
         </Box>
         <Box sx={{ m: 3, mt: 1 }}>
-          <AuthFooter />
+          {/* <AuthFooter /> */}
         </Box>
       </Box>
     </Box>
