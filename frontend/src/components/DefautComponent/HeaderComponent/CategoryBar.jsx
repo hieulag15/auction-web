@@ -28,7 +28,7 @@ const CategoryBar = () => {
                   key={category.id}
                   color="inherit"
                   component={Link}
-                  to={`/customer`} 
+                  to={`/customer-asset`} 
                   onClick={handleClick}
                 >
                   <Typography variant="h7" fontWeight="bold">

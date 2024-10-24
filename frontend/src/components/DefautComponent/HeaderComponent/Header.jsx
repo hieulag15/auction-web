@@ -63,7 +63,7 @@ export default function Header() {
               <Logo />
               {!isMobile && (
                 <Box sx={{ display: 'flex', gap: 4, ml: 2 }}>
-                  <Link href="/" color="inherit" underline="none" sx={{ color: 'white' }}>
+                  <Link href="/customer" color="inherit" underline="none" sx={{ color: 'white' }}>
                     Home
                   </Link>
                   <Link href="#introduction" color="inherit" underline="none" sx={{ color: 'white' }}>
