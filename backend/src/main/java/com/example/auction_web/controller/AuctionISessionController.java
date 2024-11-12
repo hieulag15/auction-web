@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/auction-session")
+@RequestMapping("/session")
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class AuctionISessionController {
@@ -38,7 +38,7 @@ public class AuctionISessionController {
     }
 
     @PutMapping("/{id}")
-    ApiResponse<AuctionSessionResponse> updateAuctionSeesion(@PathVariable String id, @RequestBody AuctionSessionUpdateRequest request) {
+    ApiResponse<AuctionSessionResponse> updateAuctionSession(@PathVariable String id, @RequestBody AuctionSessionUpdateRequest request) {
         return ApiResponse.<AuctionSessionResponse>builder()
                 .code(HttpStatus.OK.value())
                 .result(auctionSessionService.updateAuctionSession(id, request))
@@ -79,6 +79,14 @@ public class AuctionISessionController {
         return ApiResponse.<AuctionSessionInfoDetail>builder()
                 .code(HttpStatus.OK.value())
                 .result(auctionSessionService.getDetailAuctionSessionById(request.getAuctionSessionId()))
+                .build();
+    }
+
+    @GetMapping("/{id}")
+    ApiResponse<AuctionSessionResponse> getAuctionSessionById(@PathVariable String id) {
+        return ApiResponse.<AuctionSessionResponse>builder()
+                .code(HttpStatus.OK.value())
+                .result(auctionSessionService.getAuctionSessionById(id))
                 .build();
     }
 }
