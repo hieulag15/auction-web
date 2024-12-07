@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { createSesion, getSessionById, filterSessions, getRelatedSessions, updateSesion, registerSesion, getRegistedSession, checkRegisted, getUsersRegisted, getWinSessionsByUserId } from '~/api/sessionApi'
+import { createSesion, getSessionById, filterSessions, getRelatedSessions, updateSesion, registerSesion, getRegistedSession, checkRegisted, getUsersRegisted, getWinSessionsByUserId, getSessionByAssetId } from '~/api/sessionApi'
 
 export const useCreateSession = () => {
   const queryClient = useQueryClient()
@@ -33,7 +33,9 @@ export const useRegisterSession = () => {
 };
 
 export const useCheckRegisted = (payload) => {
-  return useQuery(['checkRegisted', payload], () => checkRegisted(payload), {
+  return useQuery({
+    queryKey: ['checkRegisted', payload],
+    queryFn: () => checkRegisted(payload),
     onError: (error) => {
       console.error('Error checking registration status:', error);
     },
@@ -41,7 +43,9 @@ export const useCheckRegisted = (payload) => {
 };
 
 export const useGetUsersRegisted = (id) => {
-  return useQuery(['getUsersRegisted', id], () => getUsersRegisted(id), {
+  return useQuery({
+    queryKey: ['getUsersRegisted', id],
+    queryFn: () => getUsersRegisted(id),
     onError: (error) => {
       console.error('Error fetching registered users:', error);
     },
@@ -86,6 +90,16 @@ export const useGetSessionById = (sessionId) => {
     queryFn: () => getSessionById(sessionId)
   })
 }
+
+export const useGetSessionByAssetId = (assetId) => {
+  return useQuery({
+    queryKey: ['sessionByAssetId', assetId],
+    queryFn: () => getSessionByAssetId(assetId),
+    onError: (error) => {
+      console.error('Error fetching session by asset ID:', error);
+    },
+  });
+};
 
 export const useGetRelatedSessions = (id) => {
   return useQuery({

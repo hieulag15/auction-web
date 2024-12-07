@@ -25,15 +25,15 @@ import { useAppStore } from '~/store/appStore'
 import LoginForm from '~/features/Authentication/components/AuthLogin/Login'
 import { useNavigate } from 'react-router-dom'
 import { StyledCardMedia, StyledCard, primaryColor } from './style'
-import { useCheckDeposit, useCreateAuctionHistory, useGetAuctionHistoriesByAuctionSessionId } from '~/hooks/auctionHistoryHook'
+import { useCreateAuctionHistory, useGetAuctionHistoriesByAuctionSessionId } from '~/hooks/auctionHistoryHook'
 import AppModal from '~/components/Modal/Modal'
 import PlaceBidForm from './components/PlaceBidForm'
 import VendorInformation from '../VendorInfomation'
 import { connectWebSocket, disconnectWebSocket, sendMessage } from '~/service/webSocketService'
 import Countdown from 'react-countdown'
 import PlaceDepositForm from './components/PlaceDepositForm'
-import { useCreateDeposit } from '~/hooks/depositHook'
 import AuctionHistoryDialog from './components/AuctionHistoryDialog'
+import { useCheckDeposit, useCreateDeposit } from '~/hooks/depositHook'
 
 const customTheme = createTheme({
   palette: {
@@ -309,11 +309,12 @@ const SessionDetail = ({ item, refresh }) => {
                             component="span"
                             sx={{
                               ml: 1,
-                              color: primaryColor,
-                              cursor: 'pointer',
-                              textDecoration: 'underline'
+                              color: isDeposit ? primaryColor : 'gray',
+                              cursor: isDeposit ? 'pointer' : 'default',
+                              textDecoration: 'underline',
+                              opacity: isDeposit ? 1 : 0.5
                             }}
-                            onClick={handleOpenHistoryDialog}
+                            onClick={isDeposit ? handleOpenHistoryDialog : undefined}
                           >
                             Xem
                           </Typography>
@@ -351,7 +352,7 @@ const SessionDetail = ({ item, refresh }) => {
                         </Button>
                       }>
                         {auth.isAuth ? (
-                          isDeposit === false ? (
+                          !isDeposit ? (
                             <PlaceDepositForm item={item} onSubmit={handleSubmitDeposit} />
                           ) : (
                             <PlaceBidForm item={item} onSubmit={handleSubmitPrice} />
@@ -409,20 +410,21 @@ const SessionDetail = ({ item, refresh }) => {
           </Grid>
           <Divider sx={{ my: 6 }} />
           <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-            Thông tin chi tiết
+            Mô tả
           </Typography>
-          <Paper elevation={3} sx={{ p: 3, mb: 3, borderRadius: 2 }}>
-            <Typography variant="h6" gutterBottom>
-              Mô tả
+          <Box sx={{ p: 3, mb: 1, borderRadius: 2 }}>
+            <Typography variant="h6">
+              Thông tin phiên
             </Typography>
             <Typography paragraph dangerouslySetInnerHTML={{ __html: item.description }} />
-          </Paper>
-          <Paper elevation={3} sx={{ p: 3, mb: 6, borderRadius: 2 }}>
-            <Typography variant="h6" gutterBottom>
-              Thông tin giá cọc
+          </Box>
+          <Divider sx={{ my: 1 }} />
+          <Box sx={{ p: 3, mb: 3, borderRadius: 2 }}>
+            <Typography variant="h6">
+              Thông tin vật phẩm
             </Typography>
-            <Typography>{item.deposit}</Typography>
-          </Paper>
+            <Typography paragraph dangerouslySetInnerHTML={{ __html: item.asset.assetDescription }} />
+          </Box>
 
           <VendorInformation />
           <Snackbar
